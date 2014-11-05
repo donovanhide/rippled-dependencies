@@ -52,6 +52,9 @@ wait for Application::stopped()
 RootStoppable::stop
 Stoppable::stopRecursive
 
+call OrderBook::OnStop
+wait for OrderBook::stopped() // Might not be running on the job queue!
+
 call LedgerCleaner::OnStop
 wait for LedgerCleaner::stopped()
 
@@ -105,3 +108,5 @@ wait for Validators::Manager::stopped()
 * After OnStop, no parent should receive OnStop until stopped() of current child is called.
 * Fixing highlights problems in other parts of the code such as LedgerCleaner and OrderBookDB having possible cyclic dependencies and InboundLedgers should shutdown before LedgerMaster. Order of children matters!
 * Dependency graph is possibly wrong.
+* Jobs that run on the JobQueue such as OrderBookDB and possibly the path finding job will implicitly close when the Job Queue closes. There may be a need for multiple job queues. It gets complex quickly!
+* Stoppable has too many features. It could have been called Preparable/Startable/Stoppable. It only ever runs on one thread, so its concurrency features, apart from checking stop() is called once only and condition variable usage, are unrequired.
