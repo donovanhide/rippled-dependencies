@@ -101,5 +101,7 @@ wait for Validators::Manager::stopped()
 
 ##Problems
 * OnStop is called in the wrong order
+* Wait for stopped() occurs in the wrong order
 * After OnStop, no parent should receive OnStop until stopped() of current child is called.
 * Fixing highlights problems in other parts of the code such as LedgerCleaner and OrderBookDB having possible cyclic dependencies and InboundLedgers should shutdown before LedgerMaster. Order of children matters!
+* Dependency graph is possibly wrong.
