@@ -95,10 +95,10 @@ call Validators::Manager::OnStop
 wait for Validators::Manager::stopped()
 
 call LoadManager::OnStop
-wait for Validators::Manager::stopped()
+wait for LoadManager::stopped()
 
 call Application::OnStop
-wait for Validators::Manager::stopped()
+wait for Application::stopped()
 
 ```
 
